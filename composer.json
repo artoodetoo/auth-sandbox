@@ -1,0 +1,21 @@
+{
+  "name": "artoodetoo/auth-sandbox",
+  "description": "Open source social sign on PHP library",
+  "keywords": ["login", "oauth", "openid"],
+  "license": "(MIT or GPL-3.0+)",
+  "minimum-stability":"dev",
+  "authors": [
+    {
+      "name": "artoodetoo",
+      "email": "i.am@artoodetoo.org"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "R2\\Auth\\": "src/"
+    }
+  }
+}
