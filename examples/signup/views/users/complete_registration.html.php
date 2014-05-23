@@ -22,19 +22,19 @@ we need your email and a password at least
       <table width="500" border="0" cellpadding="2" cellspacing="2">
         <tr>
           <td><div align="right"><strong>Email</strong></div></td>
-          <td><input name="email" type="text" size="55" value="<?= isset($user_data['email']) ? e($user_data['email']) : '' ?>" /></td>
+          <td><input name="email" type="text" size="55" value="<?= isset($user_data['email']) ? $this->e($user_data['email']) : '' ?>" /></td>
           </tr>
         <tr>
           <td><div align="right"><strong>Password</strong></div></td>
-          <td><input type="text" name="password" size="30" value="<?= isset($user_data['password']) ? e($user_data['password']) : '' ?> ?>" /> auto genrated for you</td>
+          <td><input type="text" name="password" size="30" value="<?= isset($user_data['password']) ? $this->e($user_data['password']) : '' ?>" /> auto genrated for you</td>
           </tr>
         <tr>
           <td nowrap="nowrap"><div align="right"><strong>First name</strong></div></td>
-          <td><input name="first_name" type="text" size="30" value="<?= isset($user_data['first_name']) ? e($user_data['first_name']) : '' ?> ?>" /></td>
+          <td><input name="first_name" type="text" size="30" value="<?= isset($user_data['first_name']) ? $this->e($user_data['first_name']) : '' ?>" /></td>
           </tr>
         <tr>
           <td><div align="right"><strong>Last name</strong></div></td>
-          <td><input type="text" name="last_name" size="30" value="<?= isset($user_data['last_name']) ? e($user_data['last_name']) : '' ?> ?>" /></td>
+          <td><input type="text" name="last_name" size="30" value="<?= isset($user_data['last_name']) ? $this->e($user_data['last_name']) : '' ?>" /></td>
           </tr>
         <tr>
           <td>&nbsp;</td>
