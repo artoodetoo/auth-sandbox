@@ -32,18 +32,18 @@ class AdapterFactory
         $config = $this->getConfigById($id);
 
         if (!$this->authConfig) {
-            throw new Exception("Unknown Provider", Exception::UNKNOWN_OR_DISABLED_PROVIDER);
+            throw new Exception('Unknown Provider', Exception::UNKNOWN_OR_DISABLED_PROVIDER);
         }
 
-        if (!(bool)$config["enabled"]) {
-            throw new Exception("Provider disabled", Exception::UNKNOWN_OR_DISABLED_PROVIDER);
+        if (!(bool)$config['enabled']) {
+            throw new Exception('Provider disabled', Exception::UNKNOWN_OR_DISABLED_PROVIDER);
         }
 
         $providerClassName = "R2\\Auth\\Provider\\{$id}";
 
         // Is wrapper defined?
-        if (isset($config["wrapper"]) && $config["wrapper"]) {
-            $providerClassName = $config ["wrapper"] ["class"];
+        if (isset($config['wrapper']) && $config['wrapper']) {
+            $providerClassName = $config ['wrapper'] ['class'];
         }
 
         // Create the adapter instance
@@ -78,8 +78,8 @@ class AdapterFactory
      */
     private function getConfigById($id)
     {
-        if (isset($this->authConfig["providers"][$id])) {
-            return $this->authConfig["providers"][$id];
+        if (isset($this->authConfig['providers'][$id])) {
+            return $this->authConfig['providers'][$id];
         }
 
         return null;
@@ -90,7 +90,7 @@ class AdapterFactory
      */
     private function getProviderCiId($id)
     {
-        foreach (array_keys($this->authConfig["providers"]) as $idpid) {
+        foreach (array_keys($this->authConfig['providers']) as $idpid) {
             if (strtolower($idpid) == strtolower($id)) {
                 return $idpid;
             }

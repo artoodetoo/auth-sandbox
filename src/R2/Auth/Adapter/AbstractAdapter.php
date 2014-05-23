@@ -65,12 +65,12 @@ abstract class AbstractAdapter implements AdapterInterface
 
         $parameters = array_merge($defaults, (array)$parameters);
 
-        $this->storage->set($this->providerId . ".hauth_return_to", $parameters["hauth_return_to"]);
-        $this->storage->set($this->providerId . ".hauth_endpoint", $parameters["hauth_endpoint"]);
-        $this->storage->set($this->providerId . ".id_provider_params", $parameters);
+        $this->storage->set($this->providerId . '.hauth_return_to', $parameters['hauth_return_to']);
+        $this->storage->set($this->providerId . '.hauth_endpoint', $parameters['hauth_endpoint']);
+        $this->storage->set($this->providerId . '.id_provider_params', $parameters);
 
         // redirect user to start url
-        Util::redirect($parameters["hauth_start_url"]);
+        Util::redirect($parameters['hauth_start_url']);
     }
 
     /**
@@ -109,7 +109,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function getUserProfile()
     {
-        throw new Exception("Provider does not support this feature.", 8);
+        throw new Exception('Provider does not support this feature.', 8);
     }
 
     /**
@@ -117,7 +117,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function getUserContacts()
     {
-        throw new Exception("Provider does not support this feature.", 8);
+        throw new Exception('Provider does not support this feature.', 8);
     }
 
     /**
@@ -125,7 +125,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function getUserActivity($stream)
     {
-        throw new Exception("Provider does not support this feature.", 8);
+        throw new Exception('Provider does not support this feature.', 8);
     }
 
     /**
@@ -133,7 +133,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function setUserStatus($status)
     {
-        throw new Exception("Provider does not support this feature.", 8);
+        throw new Exception('Provider does not support this feature.', 8);
     }
 
     /**

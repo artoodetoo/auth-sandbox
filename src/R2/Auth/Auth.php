@@ -22,9 +22,9 @@ class Auth
     public function __construct(array $config, StorageInterface $storage)
     {
         // reset debug mode
-        if (!isset($config["debug_mode"])) {
-            $config["debug_mode"] = false;
-            $config["debug_file"] = null;
+        if (!isset($config['debug_mode'])) {
+            $config['debug_mode'] = false;
+            $config['debug_file'] = null;
         }
 
         
@@ -77,7 +77,7 @@ class Auth
     public function getConnectedProviders()
     {
         $idps = [];
-        foreach ($this->config["providers"] as $idpid => $params) {
+        foreach ($this->config['providers'] as $idpid => $params) {
             if ($this->isConnectedWith($idpid)) {
                 $idps[] = $idpid;
             }
@@ -94,7 +94,7 @@ class Auth
     public function getProviders()
     {
         $idps = [];
-        foreach ($this->config["providers"] as $idpid => $params) {
+        foreach ($this->config['providers'] as $idpid => $params) {
             if ($params['enabled']) {
                 $idps[$idpid] = ['connected' => false];
 

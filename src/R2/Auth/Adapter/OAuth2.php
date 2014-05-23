@@ -23,7 +23,7 @@ class OAuth2 extends AbstractAdapter
 {
 
     // default permissions
-    public $scope = "";
+    public $scope = '';
 
     /**
      * try to get the error message from provider api
@@ -31,23 +31,23 @@ class OAuth2 extends AbstractAdapter
     public function errorMessageByStatus($code = null)
     {
         $http_status_codes = [
-            200 => "OK: Success!",
-            304 => "Not Modified: There was no new data to return.",
-            400 => "Bad Request: The request was invalid.",
-            401 => "Unauthorized.",
-            403 => "Forbidden: The request is understood, but it has been refused.",
-            404 => "Not Found: The URI requested is invalid or the resource requested does not exists.",
-            406 => "Not Acceptable.",
-            500 => "Internal Server Error: Something is broken.",
-            502 => "Bad Gateway.",
-            503 => "Service Unavailable."
+            200 => 'OK: Success!',
+            304 => 'Not Modified: There was no new data to return.',
+            400 => 'Bad Request: The request was invalid.',
+            401 => 'Unauthorized.',
+            403 => 'Forbidden: The request is understood, but it has been refused.',
+            404 => 'Not Found: The URI requested is invalid or the resource requested does not exists.',
+            406 => 'Not Acceptable.',
+            500 => 'Internal Server Error: Something is broken.',
+            502 => 'Bad Gateway.',
+            503 => 'Service Unavailable.'
         ];
 
         if (!$code && $this->api) {
             $code = $this->api->http_code;
         }
         if (isset($http_status_codes[$code])) {
-            return $code . " " . $http_status_codes[$code];
+            return $code . ' ' . $http_status_codes[$code];
         }
     }
 
@@ -56,7 +56,7 @@ class OAuth2 extends AbstractAdapter
      */
     public function initialize()
     {
-        if (!$this->config["keys"]["id"] || !$this->config["keys"]["secret"]) {
+        if (!$this->config['keys']['id'] || !$this->config['keys']['secret']) {
             throw new Exception(
                 "Your application id and secret are required in order to connect to {$this->providerId}.",
                 4
@@ -64,24 +64,24 @@ class OAuth2 extends AbstractAdapter
         }
 
         // override requested scope
-        if (isset($this->config["scope"]) && !empty($this->config["scope"])) {
-            $this->scope = $this->config["scope"];
+        if (isset($this->config['scope']) && !empty($this->config['scope'])) {
+            $this->scope = $this->config['scope'];
         }
 
         // create a new OAuth2 client instance
-        $this->api = new OAuth2Client($this->config["keys"]["id"], $this->config["keys"]["secret"], $this->endpoint);
+        $this->api = new OAuth2Client($this->config['keys']['id'], $this->config['keys']['secret'], $this->endpoint);
 
         // If we have an access token, set it
-        if ($this->token("access_token")) {
-            $this->api->access_token = $this->token("access_token");
-            $this->api->refresh_token = $this->token("refresh_token");
-            $this->api->access_token_expires_in = $this->token("expires_in");
-            $this->api->access_token_expires_at = $this->token("expires_at");
+        if ($this->token('access_token')) {
+            $this->api->access_token = $this->token('access_token');
+            $this->api->refresh_token = $this->token('refresh_token');
+            $this->api->access_token_expires_in = $this->token('expires_in');
+            $this->api->access_token_expires_at = $this->token('expires_at');
         }
 
         // Set curl proxy if exist
-        if (isset($this->authConfig["proxy"])) {
-            $this->api->curl_proxy = $this->authConfig["proxy"];
+        if (isset($this->authConfig['proxy'])) {
+            $this->api->curl_proxy = $this->authConfig['proxy'];
         }
     }
 
@@ -91,7 +91,7 @@ class OAuth2 extends AbstractAdapter
     public function loginBegin()
     {
         // redirect the user to the provider authentication url
-        Util::redirect($this->api->authorizeUrl(["scope" => $this->scope]));
+        Util::redirect($this->api->authorizeUrl(['scope' => $this->scope]));
     }
 
     /**
@@ -99,7 +99,7 @@ class OAuth2 extends AbstractAdapter
      */
     public function loginFinish()
     {
-        $error = (array_key_exists('error', $_REQUEST)) ? $_REQUEST['error'] : "";
+        $error = (array_key_exists('error', $_REQUEST)) ? $_REQUEST['error'] : '';
 
         // check for errors
         if ($error) {
@@ -107,7 +107,7 @@ class OAuth2 extends AbstractAdapter
         }
 
         // try to authenticate user
-        $code = (array_key_exists('code', $_REQUEST)) ? $_REQUEST['code'] : "";
+        $code = (array_key_exists('code', $_REQUEST)) ? $_REQUEST['code'] : '';
 
         try {
             $this->api->authenticate($code);
@@ -121,10 +121,10 @@ class OAuth2 extends AbstractAdapter
         }
 
         // store tokens
-        $this->token("access_token", $this->api->access_token);
-        $this->token("refresh_token", $this->api->refresh_token);
-        $this->token("expires_in", $this->api->access_token_expires_in);
-        $this->token("expires_at", $this->api->access_token_expires_at);
+        $this->token('access_token', $this->api->access_token);
+        $this->token('refresh_token', $this->api->refresh_token);
+        $this->token('expires_in', $this->api->access_token_expires_in);
+        $this->token('expires_at', $this->api->access_token_expires_at);
 
         // set user connected locally
         $this->setUserConnected();
@@ -140,15 +140,15 @@ class OAuth2 extends AbstractAdapter
 
                 // expired?
                 if ($this->api->access_token_expires_at <= time()) {
-                    $response = $this->api->refreshToken(["refresh_token" => $this->api->refresh_token]);
+                    $response = $this->api->refreshToken(['refresh_token' => $this->api->refresh_token]);
 
                     if (!isset($response->access_token) || !$response->access_token) {
                         // set the user as disconnected at this point and throw an exception
                         $this->setUserUnconnected();
 
                         throw new Exception(
-                            "The Authorization Service has return an invalid response "
-                            ."while requesting a new access token. ".(string)$response->error
+                            'The Authorization Service has return an invalid response '
+                            .'while requesting a new access token. '.(string)$response->error
                         );
                     }
 
@@ -168,10 +168,10 @@ class OAuth2 extends AbstractAdapter
             }
 
             // re store tokens
-            $this->token("access_token", $this->api->access_token);
-            $this->token("refresh_token", $this->api->refresh_token);
-            $this->token("expires_in", $this->api->access_token_expires_in);
-            $this->token("expires_at", $this->api->access_token_expires_at);
+            $this->token('access_token', $this->api->access_token);
+            $this->token('refresh_token', $this->api->refresh_token);
+            $this->token('expires_in', $this->api->access_token_expires_in);
+            $this->token('expires_at', $this->api->access_token_expires_at);
         }
     }
 }
