@@ -2,6 +2,8 @@
 
 namespace Examples\Signup\Controller;
 
+use R2\Auth\Auth;
+use R2\Auth\Storage\Session;
 use Examples\Signup\Base;
 use Examples\Signup\Model\User as UserModel;
 use Examples\Signup\Model\Auth as AuthModel;
@@ -139,8 +141,7 @@ class Users extends Base
         $user_data = $user->findById($_SESSION['user']);
 
         // load complete registration form view
-        $data['user_data'] = $user_data;
-        $this->render('users/complete_registration', $data);
+        $this->render('users/complete_registration', compact('user_data'));
     }
 
     public function profile()
@@ -167,7 +168,30 @@ class Users extends Base
         $user_authentication = $authentication->findByUserId($_SESSION['user']);
 
         // load profile view
-        $data = ['user_data' => $user_data, 'user_authentication' => $user_authentication];
-        $this->render('users/profile', $data);
+        $this->render('users/profile', compact('user_data', 'user_authentication'));
+    }
+    
+    public function contacts()
+    {
+        // user connected?
+        if (!isset($_SESSION['user'])) {
+            $this->redirect('users/login');
+        }
+        
+        $authentication = new AuthModel();
+        $user_authentication = $authentication->findByUserId($_SESSION['user']);
+        if (empty($user_authentication['provider'])) {
+            die('Oops! User have not auth provider');
+        }
+
+        $auth = new Auth(self::$config['auth'], new Session());
+        $adapter = $auth->getAdapter($user_authentication['provider'])->authenticate();
+ 
+        try {
+            $user_contacts = $adapter->getUserContacts();
+        } catch (\Exception $ex) {
+            $user_contacts = [];
+        }
+        $this->render('users/contacts', compact('user_contacts'));
     }
 }

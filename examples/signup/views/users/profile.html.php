@@ -67,6 +67,10 @@
 				<td><b>User profile URL</b></td>
 				<td>&nbsp; <?= $user_authentication["profile_url"] ?></td>
 			  </tr>  
+			  <tr>
+				<td><b>User contacts</b></td>
+                <td>&nbsp; <a href="?route=users/contacts">request</a></td>
+			  </tr>  
 			</tbody>
 			</table> 
 	  </fieldset>
