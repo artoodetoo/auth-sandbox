@@ -35,6 +35,13 @@ return [
                     'secret' => ''
                 ]
             ],
+            'Google' => [
+                'enabled' => false,
+                'keys' => [
+                    'id' => '',
+                    'secret' => ''
+                ]
+            ],
         ],
         'debug_mode' => false,
         'debug_file' => ''
